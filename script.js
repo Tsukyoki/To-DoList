@@ -4,8 +4,7 @@ const listContainer = document.getElementById("list-container");
 function addTask(){
     if(inputBox.value === ''){
         alert("You must add something!!");
-    }
-    else{
+    } else {
         let li = document.createElement("li");
         li.innerHTML = inputBox.value;
         listContainer.appendChild(li);
@@ -16,6 +15,13 @@ function addTask(){
     inputBox.value = '';
     saveData();
 }
+
+inputBox.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        addTask();
+    }
+});
+
 listContainer.addEventListener("click", function(e){
     if(e.target.tagName === "LI"){
         e.target.classList.toggle("checked");
@@ -27,9 +33,15 @@ listContainer.addEventListener("click", function(e){
     }
 }, false);
 
+function clearAll() {
+    listContainer.innerHTML = '';
+    saveData();
+}
+
 function saveData(){
     localStorage.setItem("data", listContainer.innerHTML);
 }
+
 function loadData(){
     listContainer.innerHTML = localStorage.getItem("data");
 }
